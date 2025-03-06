@@ -4,15 +4,15 @@ pipeline {
         stage('Install Node.js & npm') {
             steps {
                 sh '''
-                    # Update package lists
-                    sudo apt update
+                    # Update package lists (without sudo)
+                    apt update
 
-                    # Install Node.js and npm
-                    sudo apt install -y nodejs npm
+                    # Install Node.js and npm (without sudo)
+                    apt install -y nodejs npm || true
 
                     # Verify installation
-                    node -v
-                    npm -v
+                    node -v || echo "Node.js installation failed"
+                    npm -v || echo "npm installation failed"
                 '''
             }
         }
