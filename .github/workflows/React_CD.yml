@@ -16,7 +16,7 @@ jobs:
               with:
                 node-version: '21'
 
-            - name: "Setup vercal cil"
+            - name: "Setup vercal CLI"
               run: npm install -g vercel
 
 
