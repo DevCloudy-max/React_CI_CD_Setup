@@ -1,33 +1,25 @@
 pipeline {
     agent any
-    tools { nodejs "NodeJS" }
-    
     stages {
-        stage('Checkout Code') {  
-            steps {
-                git branch: 'main', url: 'https://github.com/DevCloudy-max/React_CI_CD_Setup.git'
-            }
-        }
+       stage('Build') {
+           agent {
+                docker{
+                    image 'node:22.11.0-alpine3.20'
+                    args '-u root'
+                    reuseNode true
+                }
+           }
 
-        stage('Install Dependencies') {
-            steps {
+             steps {
                 sh '''
-                    echo "Checking Node.js & npm version"
-                    node -v
-                    npm -v
-                    npm install --legacy-peer-deps
+                   ls -l
+                   node --version
+                   npm --version
+                   npm install
+                   npm run build
+                   ls -l  
                 '''
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh '''
-                    echo "Building Project..."
-                    npm run build
-                    ls -l
-                '''
-            }
-        }
+              }            
+        }       
     }
 }
