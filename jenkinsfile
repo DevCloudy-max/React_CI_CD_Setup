@@ -1,10 +1,10 @@
 pipline {
     agent any
     stages {
-        stage('Hello World') {
+         stage('Checkout Code') {
             steps {
-                echo 'Building..'
+                git branch: 'main', url: 'https://github.com/DevCloudy-max/React_CI_CD_Setup.git'
             }
-        }       
+        }   
     }
 }
