@@ -2,24 +2,21 @@ pipeline {
     agent any
     stages {
         stage('build') {
-                agent {
-                    docker {
-                        image 'node:18-alpine'
-                        resumeNode true // this is the key to resume the node
-                    }   
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                }
             }
-
-        steps {
-            sh '''
-                ls -l
-                node -v
-                npm -v
-                npm install
-                npm run build
-                ls -l
-            '''
-            
-        }    
-        }       
+            steps {
+                sh '''
+                    ls -l
+                    node -v
+                    npm -v
+                    npm install
+                    npm run build
+                    ls -l
+                '''
+            }
+        }
     }
 }
