@@ -1,14 +1,21 @@
 pipeline {
     agent any
-    tools { nodejs "NodeJS" } // Use installed NodeJS version
+    tools { nodejs "NodeJS" }
     stages {
-        stage('build') {
+        stage('Install Dependencies') {
             steps {
                 sh '''
-                    ls -l
+                    echo "Checking Node.js & npm version"
                     node -v
                     npm -v
-                    npm install
+                    npm install --legacy-peer-deps
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                    echo "Building Project..."
                     npm run build
                     ls -l
                 '''
