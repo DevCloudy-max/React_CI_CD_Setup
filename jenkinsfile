@@ -3,7 +3,16 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                checkout scm
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/main']], // Ensure this is your correct branch
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/DevCloudy-max/React_CI_CD_Setup.git',
+                            credentialsId: 'your-git-credentials-id' // Needed for private repos
+                        ]]
+                    ])
+                }
             }
         }
         stage('Build') {
