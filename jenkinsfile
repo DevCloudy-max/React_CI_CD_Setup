@@ -1,26 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Install Node.js & npm') {
-            steps {
-                sh '''
-                    # Update package lists (without sudo)
-                    apt update
-
-                    # Install Node.js and npm (without sudo)
-                    apt install -y nodejs npm || true
-
-                    # Verify installation
-                    node -v || echo "Node.js installation failed"
-                    npm -v || echo "npm installation failed"
-                '''
+        stage('build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                }
             }
-        }
-
-        stage('Build') {
             steps {
                 sh '''
                     ls -l
+                    node -v
+                    npm -v
                     npm install
                     npm run build
                     ls -l
