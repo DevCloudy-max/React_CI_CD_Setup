@@ -4,7 +4,24 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "Hello World!"
+               agent {
+                docker {
+
+                   image 'ndoe:18-alpine'
+                   reuseNode true  
+                  }
+                }
+
+                steps {
+                    sh '''
+                        ls -l 
+                        node --version
+                        npm --version
+                        npm install
+                        npm run build
+                        ls -l
+                    '''
+                }
             }
         }
     }
